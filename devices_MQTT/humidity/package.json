@@ -1,0 +1,16 @@
+{
+  "name": "humidity",
+  "version": "1.0.0",
+  "description": "virtual devices send values",
+  "main": "humidity.js",
+  "scripts": {
+    "start": "node humidity.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "mqtt": "^3.0.0"
+  }
+}

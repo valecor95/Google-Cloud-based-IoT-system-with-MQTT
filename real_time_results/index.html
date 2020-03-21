@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" rel="stylesheet">
+  <title>Google Cloud IoT Core - MQTT</title>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-success mb-3">
+      <div class="container">
+        <ul class="navbar-nav">
+          <p><b><font size="6" color="white">Google Cloud IoT Core - MQTT</font></b></p>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <p><b><font size="2" color="white">Created by Valerio Coretti 1635747</font></b></p>
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+          <div class="card card-body mb-2 col-sm">
+            <h4 align="center">TEMPERATURE &nbsp<i class="fas fa-thermometer-half"></i></h4>
+            <div class="card card-body mb-2">
+              <h5 align="left">Latest values received</h5>
+              <div id="latest-temp"></div>
+              <hr/>
+            </div>
+            <div class="card card-body mb-2">
+              <h5 align="left">Values received during last hour</h5>
+              <div id="lasthour-temp"></div>
+              <hr/>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="card card-body mb-2 col-sm">
+            <h4 align="center">HUMIDITY &nbsp<i class="fas fa-tint"></i></h4>
+            <div class="card card-body mb-2">
+              <h5 align="left">Latest values received</h5>
+              <div id="latest-hum"></div>
+              <hr/>
+            </div>
+            <div class="card card-body mb-2">
+              <h5 align="left">Values received during last hour</h5>
+              <div id="lasthour-hum"></div>
+              <hr/>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm">
+          <div class="card card-body mb-2 col-sm">
+            <h4 align="center">WIND DIRECTION &nbsp<i class="fas fa-wind"></i></h4>
+            <div class="card card-body mb-2">
+              <h5 align="left">Latest values received</h5>
+              <div id="latest-wind"></div>
+              <hr/>
+            </div>
+            <div class="card card-body mb-2">
+              <h5 align="left">Values received during last hour</h5>
+              <div id="lasthour-wind"></div>
+              <hr/>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="card card-body mb-2 col-sm">
+            <h4 align="center">RAIN HEIGHT &nbsp<i class="fas fa-cloud-showers-heavy"></i></h4>
+            <div class="card card-body mb-2">
+              <h5 align="left">Latest values received</h5>
+              <div id="latest-rain"></div>
+              <hr/>
+            </div>
+            <div class="card card-body mb-2">
+              <h5 align="left">Values received during last hour</h5>
+              <div id="lasthour-rain"></div>
+              <hr/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+      integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <!-- jquery and socket.io (to handle chat and notifies)
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+
+
+    <script>
+      /********** Handle VALUES throw WebSocket and Socket.io *********/
+      $(function () {
+        var socket = io.connect('http://localhost:5000/' , {transports:['websocket']});
+        //var socket = io.connect('http://iot-assignment1.herokuapp.com', {transports:['websocket']});
+        //var socket = io.connect('https://iot-assignment1.herokuapp.com', {transports:['websocket']});
+        /// Devices Management
+        socket.on('temperature', function(data){
+          var payload = data.split(";");
+          var todelete = parseInt(payload[1]) - 25;
+          var id = '#'+todelete.toString();
+          $(id).remove();
+          $('#latest-temp').html('<h4 align="center">' + payload[0] + '</h4>');
+          $('#lasthour-temp').prepend('<c id='+ payload[1] + '>'+'<font size="2">' + "<"+ payload[0] + "> " +'</font></c>');
+        });
+        socket.on('humidity', function(data){
+          var payload = data.split(";");
+          var todelete = parseInt(payload[1]) - 25;
+          var id = '#'+todelete.toString();
+          $(id).remove();
+          $('#latest-hum').html('<h4 align="center">' + payload[0] + '</h4>');
+          $('#lasthour-hum').prepend('<c id='+ payload[1] + '>'+'<font size="2">' + "<"+ payload[0] + "> " +'</font></c>');
+        });
+        socket.on('wind', function(data){
+          var payload = data.split(";");
+          var todelete = parseInt(payload[1]) - 25;
+          var id = '#'+todelete.toString();
+          $(id).remove();
+          $('#latest-wind').html('<h4 align="center">' + payload[0] + '</h4>');
+          $('#lasthour-wind').prepend('<c id='+ payload[1] + '>'+'<font size="2">' + "<"+ payload[0] + "> " +'</font></c>');
+        });
+        socket.on('rain', function(data){
+          var payload = data.split(";");
+          var todelete = parseInt(payload[1]) - 25;
+          var id = '#'+todelete.toString();
+          $(id).remove();
+          $('#latest-rain').html('<h4 align="center">' + payload[0] + '</h4>');
+          $('#lasthour-rain').prepend('<c id='+ payload[1] + '>'+'<font size="2">' + "<"+ payload[0] + "> " +'</font></c>');
+        });
+      });
+    </script>
+  </body>
+</html>
