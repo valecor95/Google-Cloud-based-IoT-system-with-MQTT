@@ -27,12 +27,12 @@
           <div class="card card-body mb-2 col-sm">
             <h4 align="center">TEMPERATURE &nbsp<i class="fas fa-thermometer-half"></i></h4>
             <div class="card card-body mb-2">
-              <h5 align="left">Latest values received</h5>
+              <h6 align="left">Latest values received</h6>
               <div id="latest-temp"></div>
               <hr/>
             </div>
             <div class="card card-body mb-2">
-              <h5 align="left">Values received during last hour</h5>
+              <h6 align="left">Values received during last hour</h6>
               <div id="lasthour-temp"></div>
               <hr/>
             </div>
@@ -42,12 +42,12 @@
           <div class="card card-body mb-2 col-sm">
             <h4 align="center">HUMIDITY &nbsp<i class="fas fa-tint"></i></h4>
             <div class="card card-body mb-2">
-              <h5 align="left">Latest values received</h5>
+              <h6 align="left">Latest values received</h6>
               <div id="latest-hum"></div>
               <hr/>
             </div>
             <div class="card card-body mb-2">
-              <h5 align="left">Values received during last hour</h5>
+              <h6 align="left">Values received during last hour</h6>
               <div id="lasthour-hum"></div>
               <hr/>
             </div>
@@ -59,12 +59,12 @@
           <div class="card card-body mb-2 col-sm">
             <h4 align="center">WIND DIRECTION &nbsp<i class="fas fa-wind"></i></h4>
             <div class="card card-body mb-2">
-              <h5 align="left">Latest values received</h5>
+              <h6 align="left">Latest values received</h6>
               <div id="latest-wind"></div>
               <hr/>
             </div>
             <div class="card card-body mb-2">
-              <h5 align="left">Values received during last hour</h5>
+              <h6 align="left">Values received during last hour</h6>
               <div id="lasthour-wind"></div>
               <hr/>
             </div>
@@ -74,12 +74,12 @@
           <div class="card card-body mb-2 col-sm">
             <h4 align="center">RAIN HEIGHT &nbsp<i class="fas fa-cloud-showers-heavy"></i></h4>
             <div class="card card-body mb-2">
-              <h5 align="left">Latest values received</h5>
+              <h6 align="left">Latest values received</h6>
               <div id="latest-rain"></div>
               <hr/>
             </div>
             <div class="card card-body mb-2">
-              <h5 align="left">Values received during last hour</h5>
+              <h6 align="left">Values received during last hour</h6>
               <div id="lasthour-rain"></div>
               <hr/>
             </div>
@@ -112,7 +112,7 @@
         /// Devices Management
         socket.on('temperature', function(data){
           var payload = data.split(";");
-          var todelete = parseInt(payload[1]) - 25;
+          var todelete = parseInt(payload[1]) - 3600;
           var id = '#'+todelete.toString();
           $(id).remove();
           $('#latest-temp').html('<h4 align="center">' + payload[0] + '</h4>');
@@ -120,7 +120,7 @@
         });
         socket.on('humidity', function(data){
           var payload = data.split(";");
-          var todelete = parseInt(payload[1]) - 25;
+          var todelete = parseInt(payload[1]) - 3600;
           var id = '#'+todelete.toString();
           $(id).remove();
           $('#latest-hum').html('<h4 align="center">' + payload[0] + '</h4>');
@@ -128,7 +128,7 @@
         });
         socket.on('wind', function(data){
           var payload = data.split(";");
-          var todelete = parseInt(payload[1]) - 25;
+          var todelete = parseInt(payload[1]) - 3600;
           var id = '#'+todelete.toString();
           $(id).remove();
           $('#latest-wind').html('<h4 align="center">' + payload[0] + '</h4>');
@@ -136,7 +136,7 @@
         });
         socket.on('rain', function(data){
           var payload = data.split(";");
-          var todelete = parseInt(payload[1]) - 25;
+          var todelete = parseInt(payload[1]) - 3600;
           var id = '#'+todelete.toString();
           $(id).remove();
           $('#latest-rain').html('<h4 align="center">' + payload[0] + '</h4>');

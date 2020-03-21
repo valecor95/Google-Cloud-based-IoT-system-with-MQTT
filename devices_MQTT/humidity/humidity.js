@@ -24,7 +24,7 @@ const createJwt = (projectId, privateKeyFile, algorithm) => {
 
 // ----------------------------------------------------------------------------- PUBLISHING FUNCTION
 
-// Publish numMessages messages asynchronously
+// Function to publish numMessages messages asynchronously
 const publishAsync = (
   mqttTopic,
   client,
@@ -127,5 +127,3 @@ const publishAsync = (
     messageStr += Buffer.from(message, 'base64').toString('ascii');
     console.log(messageStr);
   });
-  // Once all of the messages have been published, the connection to Google Cloud
-  // IoT will be closed and the process will exit. See the publishAsync method.
