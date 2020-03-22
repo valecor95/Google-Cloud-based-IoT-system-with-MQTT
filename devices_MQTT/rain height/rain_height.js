@@ -46,7 +46,7 @@ const publishAsync = (
     client.publish(mqttTopic, payload, {qos: 1});
 
     // Recursive function to simulate the periodically sent of values
-    publishAsync(mqttTopic, client, iatTime, 1, connectionArgs);
+    publishAsync(mqttTopic, client);
   }, 5000);
 };
 
@@ -81,7 +81,6 @@ const publishAsync = (
   };
 
   // Create a client, and connect to the Google MQTT bridge.
-  const iatTime = parseInt(Date.now() / 1000);
   const client = mqtt.connect(connectionArgs);
 
   // Subscribe to the /devices/{device-id}/config topic to receive config updates.
@@ -105,7 +104,7 @@ const publishAsync = (
     if (!success) {
       console.log('Client not connected...');
     } else {
-      publishAsync(mqttTopic, client, iatTime, 1, connectionArgs);
+      publishAsync(mqttTopic, client);
     }
   });
 

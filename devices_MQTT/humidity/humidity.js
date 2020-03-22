@@ -27,10 +27,7 @@ const createJwt = (projectId, privateKeyFile, algorithm) => {
 // Function to publish numMessages messages asynchronously
 const publishAsync = (
   mqttTopic,
-  client,
-  iatTime,
-  messagesSent,
-  connectionArgs
+  client
 ) => {
   setTimeout(() => {
     // Function to create random values to send to the cloud platform
@@ -46,7 +43,7 @@ const publishAsync = (
     client.publish(mqttTopic, payload, {qos: 1});
 
     // Recursive function to simulate the periodically sent of values
-    publishAsync(mqttTopic, client, iatTime, 1, connectionArgs);
+    publishAsync(mqttTopic, client);
   }, 5000);
 };
 
@@ -105,7 +102,7 @@ const publishAsync = (
     if (!success) {
       console.log('Client not connected...');
     } else {
-      publishAsync(mqttTopic, client, iatTime, 1, connectionArgs);
+      publishAsync(mqttTopic, client);
     }
   });
 
