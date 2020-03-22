@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" rel="stylesheet">
+  <title>Google Cloud IoT Core - MQTT</title>
+  </head>
+
+  <body onload="JavaScript:timedRefresh(1800000);">
+    {{{body}}}
+    <!-- bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+      integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <!-- jquery and socket.io (to handle chat and notifies) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+
+
+    <script>
+      /********** Handle VALUES throw WebSocket and Socket.io *********/
+      function timedRefresh(timeoutPeriod) {
+        setTimeout("location.reload(true);",timeoutPeriod);
+      }
+
+      $(function () {
+        //var socket = window.io.connect('http://localhost:5000', {transports:['websocket']});
+        //var socket = io.connect('http://iot-assignment1.herokuapp.com', {transports:['websocket']});
+        var socket = io.connect('https://iot-assignment1.herokuapp.com', {transports:['websocket']});
+        /// Devices Management
+        socket.on('temperature', function(data){
+          var payload = data.split(";");
+          $('#latest-temp').html('<h4 align="center">' + payload[0] + '</h4>');
+          $('#lasthour-temp').prepend('<c id='+ payload[1] + '>'+'<font size="2">' + "<"+ payload[0] + "> " +'</font></c>');
+        });
+        socket.on('humidity', function(data){
+          var payload = data.split(";");
+          $('#latest-hum').html('<h4 align="center">' + payload[0] + '</h4>');
+          $('#lasthour-hum').prepend('<c id='+ payload[1] + '>'+'<font size="2">' + "<"+ payload[0] + "> " +'</font></c>');
+        });
+        socket.on('wind', function(data){
+          var payload = data.split(";");
+          $('#latest-wind').html('<h4 align="center">' + payload[0] + '</h4>');
+          $('#lasthour-wind').prepend('<c id='+ payload[1] + '>'+'<font size="2">' + "<"+ payload[0] + "> " +'</font></c>');
+        });
+        socket.on('rain', function(data){
+          var payload = data.split(";");
+          $('#latest-rain').html('<h4 align="center">' + payload[0] + '</h4>');
+          $('#lasthour-rain').prepend('<c id='+ payload[1] + '>'+'<font size="2">' + "<"+ payload[0] + "> " +'</font></c>');
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,12 +1,12 @@
 {
-  "name": "temperature",
+  "name": "wind-direction",
   "version": "1.0.0",
-  "description": "virtual devices send values",
-  "main": "temperature.js",
+  "description": "wind direction virtual devices send random values",
+  "main": "wind_direction.js",
   "scripts": {
-    "start": "node temperature.js"
+    "start": "node wind_direction.js"
   },
-  "author": "",
+  "author": "Valerio Coretti 1635747",
   "license": "ISC",
   "dependencies": {
     "fs": "0.0.1-security",

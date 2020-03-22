@@ -1,12 +1,12 @@
 {
   "name": "temperature",
   "version": "1.0.0",
-  "description": "virtual devices send values",
+  "description": "temperature virtual devices send random values",
   "main": "temperature.js",
   "scripts": {
     "start": "node temperature.js"
   },
-  "author": "",
+  "author": "Valerio Coretti 1635747",
   "license": "ISC",
   "dependencies": {
     "fs": "0.0.1-security",
