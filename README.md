@@ -1,4 +1,5 @@
 # Cloud-based-IoT-system-with-MQTT
+![img](./img/schema.png)
 
 This is a project made for the Assignment1 of Internet of Things class at Sapienza University of Rome.
 In this assignment I created a cloud-based IoT system that collects information from a set of virtual environmental sensors using the MQTT protocol. I also create a simple web site dashboard to display the data collected from the sensors.
