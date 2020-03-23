@@ -1,0 +1,16 @@
+{
+  "name": "humidity",
+  "version": "1.0.0",
+  "description": "humidity virtual devices send random values",
+  "main": "humidity.js",
+  "scripts": {
+    "start": "node humidity.js"
+  },
+  "author": "Valerio Coretti 1635747",
+  "license": "ISC",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "mqtt": "^3.0.0"
+  }
+}
