@@ -12,4 +12,4 @@ ___
 
 * #### [Video Tutorial - Youtube]()
 ___
-![img](./img/gciM.png)
+![img](./img/testvel.gif)
