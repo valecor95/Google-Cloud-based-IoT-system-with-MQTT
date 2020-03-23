@@ -1,0 +1,16 @@
+{
+  "name": "rain-height",
+  "version": "1.0.0",
+  "description": "rain height virtual devices send random values",
+  "main": "rain_height.js",
+  "scripts": {
+    "start": "node rain_height.js"
+  },
+  "author": "Valerio Coretti 1635747",
+  "license": "ISC",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "mqtt": "^3.0.0"
+  }
+}
