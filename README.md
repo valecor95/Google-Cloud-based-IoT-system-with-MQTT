@@ -6,8 +6,6 @@ In this assignment I created a cloud-based IoT system that collects information 
 The MQTT is managed using the cloud-based backend of Google IoT platform.
 
 TECHNOLOGY USED: Node.js, MQTT, WebSockets, MongoDB, JQuery, Bootstrap CSS and HTML.
-
-#### [Dashboard - Heroku](https://iot-assignment1.herokuapp.com)
 ___
 ## Tutorial
 We recommend you to see before the hands on tutorial on Hackster.io and then the video tutorial for a better understanding.
@@ -16,4 +14,8 @@ We recommend you to see before the hands on tutorial on Hackster.io and then the
 
 * #### [Video Tutorial - Youtube](https://youtu.be/lChD2VoH1Jk)
 ___
+## Web Dashboard
+The Heroku web dashboard is available here:
+* #### [Dashboard - Heroku](https://iot-assignment1.herokuapp.com)
+
 ![img](./img/testvel.gif)
