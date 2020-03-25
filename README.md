@@ -1,4 +1,4 @@
-# Cloud-based-IoT-system-with-MQTT
+# Google-Cloud-based-IoT-system-with-MQTT
 ![img](./img/schema.png)
 
 This is a project made for the Assignment1 of Internet of Things class at Sapienza University of Rome.
