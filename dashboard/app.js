@@ -37,9 +37,10 @@ io.on('connection', function(socket){
       console.log(`Received message ${message.id}:`);
       console.log(`\tData: ${message.data}`);
       console.log(`\tAttributes: ${message.attributes}`);
+      // Splitting the payload received
       var payload = `${message.data}`.split(";");
 
-
+      // Insert the new value in the Database
       const newValue = {
         deviceId: payload[0].toString(),
         value: payload[1].toString(),
@@ -47,16 +48,16 @@ io.on('connection', function(socket){
       };
       new Values(newValue).save();
 
-      // TEMPERATURE
+      // TEMPERATURE websocket displays new value
       if(payload[0] == "device1")
         io.emit("temperature", payload[1]+";"+payload[2]);
-      // HUMIDITY
+      // HUMIDITY websocket displays new value
       if(payload[0] == "device2")
         io.emit("humidity", payload[1]+";"+payload[2]);
-      // HUMIDITY
+      // WIND DIRECTION websocket displays new value
       if(payload[0] == "device3")
         io.emit("wind", payload[1]+";"+payload[2]);
-      // HUMIDITY
+      // RAIN HEIGHT websocket displays new value
       if(payload[0] == "device4")
         io.emit("rain", payload[1]+";"+payload[2]);
 
@@ -99,6 +100,7 @@ mongoose.connect(uri, {
 
 // GET route for index page
 app.get('/', function (req, res) {
+  // Query to retrieve the last hour values
   Values.find(
     { date: { $gt: parseInt(Date.now()/1000) - 3600 } }
   ).then(values =>{

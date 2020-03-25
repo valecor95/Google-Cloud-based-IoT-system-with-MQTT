@@ -24,13 +24,13 @@ const createJwt = (projectId, privateKeyFile, algorithm) => {
 
 // ----------------------------------------------------------------------------- PUBLISHING FUNCTION
 
-// Function to publish messages asynchronously
+// Function to publish messages asynchronously and periodically (every 5 seconds)
 const publishAsync = (
   mqttTopic,
   client
 ) => {
   setTimeout(() => {
-    // Function to create random values to send to the cloud platform
+    // Function to generate random values to send to the cloud platform
     function getRndInteger(min, max) {
       return Math.floor(Math.random() * (max - min)) + min;
     }
@@ -38,7 +38,7 @@ const publishAsync = (
     const temperature = getRndInteger(-50, 50) + ' °C';
     var date = parseInt(Date.now()/1000);
     const payload = deviceId+";"+temperature+";"+date;
-    // Publish "payload" to the MQTT topic. qos=1 means at least once delivery. (There is also qos=0)
+    // Publish "payload" to the MQTT topic. qos=1 means at least once delivery.
     console.log('Publishing message:', payload);
     client.publish(mqttTopic, payload, {qos: 1});
 
@@ -49,6 +49,7 @@ const publishAsync = (
 
 
   // --------------------------------------------------------------------------- SUBSCRIBING
+  // Arguments of the google cloud platform
   const projectId = `awesome-sylph-271611`;
   const deviceId = `device1`;
   const registryId = `assignment1`;
@@ -96,6 +97,7 @@ const publishAsync = (
   // same as the device registry's Cloud Pub/Sub topic.
   const mqttTopic = `/devices/${deviceId}/${messageType}`;
 
+  // Handle the connection event
   client.on('connect', success => {
     console.log('connect');
     if (!success) {
@@ -105,14 +107,17 @@ const publishAsync = (
     }
   });
 
+  // Handle the closing connection event
   client.on('close', () => {
     console.log('close');
   });
 
+  // Handle the error event
   client.on('error', err => {
     console.log('error', err);
   });
 
+  // Handle the message event 
   client.on('message', (topic, message) => {
     let messageStr = 'Message received: ';
     if (topic === `/devices/${deviceId}/config`) {
