@@ -7,11 +7,13 @@ The MQTT is managed using the cloud-based backend of Google IoT platform.
 
 TECHNOLOGY USED: Node.js, MQTT, WebSockets, MongoDB, JQuery, Bootstrap CSS and HTML.
 
+#### [Dashboard - Heroku](https://iot-assignment1.herokuapp.com)
 ___
-* #### [Dashboard - Heroku](https://iot-assignment1.herokuapp.com)
+## Tutorial
+We recommend you to see before the hands on tutorial on Hackster.io and then the video tutorial for a better understanding.
 
 * #### [Hands on Tutorial - Hackster.io](https://www.hackster.io/valeriocoretti/cloud-based-iot-system-with-mqtt-32c4dd)
 
-* #### [Video Tutorial - Youtube]()
+* #### [Video Tutorial - Youtube](https://youtu.be/lChD2VoH1Jk)
 ___
 ![img](./img/testvel.gif)
