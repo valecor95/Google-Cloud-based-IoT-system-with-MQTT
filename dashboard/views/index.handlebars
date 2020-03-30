@@ -25,6 +25,9 @@
               {{#eq this.deviceId "device1"}}
                 <c id="{{this.date}}"><font size=2><{{this.value}}></font></c>
               {{/eq}}
+              {{#eq this.deviceId "riot_device1"}}
+                <c id="{{this.date}}"><font size=2><{{this.value}}></font></c>
+              {{/eq}}
             {{/each}}
           </div>
           <hr/>
@@ -44,6 +47,9 @@
           <div id="lasthour-hum">
             {{#each values}}
               {{#eq this.deviceId "device2"}}
+                <c id="{{this.date}}"><font size=2><{{this.value}}></font></c>
+              {{/eq}}
+              {{#eq this.deviceId "riot_device2"}}
                 <c id="{{this.date}}"><font size=2><{{this.value}}></font></c>
               {{/eq}}
             {{/each}}
@@ -69,6 +75,9 @@
               {{#eq this.deviceId "device3"}}
                 <c id="{{this.date}}"><font size=2><{{this.value}}></font></c>
               {{/eq}}
+              {{#eq this.deviceId "riot_device3"}}
+                <c id="{{this.date}}"><font size=2><{{this.value}}></font></c>
+              {{/eq}}
             {{/each}}
           </div>
           <hr/>
@@ -88,6 +97,9 @@
           <div id="lasthour-rain">
             {{#each values}}
               {{#eq this.deviceId "device4"}}
+                <c id="{{this.date}}"><font size=2><{{this.value}}></font></c>
+              {{/eq}}
+              {{#eq this.deviceId "riot_device4"}}
                 <c id="{{this.date}}"><font size=2><{{this.value}}></font></c>
               {{/eq}}
             {{/each}}
