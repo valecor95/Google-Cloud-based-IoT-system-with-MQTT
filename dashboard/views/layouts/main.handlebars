@@ -33,9 +33,9 @@
       }
 
       $(function () {
-        //var socket = window.io.connect('http://localhost:5000', {transports:['websocket']});
+        var socket = window.io.connect('http://localhost:5000', {transports:['websocket']});
         //var socket = io.connect('http://iot-assignment1.herokuapp.com', {transports:['websocket']});
-        var socket = io.connect('https://iot-assignment1.herokuapp.com', {transports:['websocket']});
+        //var socket = io.connect('https://iot-assignment1.herokuapp.com', {transports:['websocket']});
         /// Devices Management
         socket.on('temperature', function(data){
           var payload = data.split(";");
