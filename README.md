@@ -1,21 +1,26 @@
 # Google-Cloud-based-IoT-system-with-MQTT
-![img](./img/schema.png)
+![img](./img/testvel.gif)
 
-This is a project made for the Assignment1 of Internet of Things class at Sapienza University of Rome.
-In this assignment I created a cloud-based IoT system that collects information from a set of virtual environmental sensors using the MQTT protocol. I also create a simple web site dashboard to display the data collected from the sensors.
-The MQTT is managed using the cloud-based backend of Google IoT platform.
+This is a project made for the Internet of Things class at the Sapienza University of Rome.
+It is a cloud-based IoT system that collects information from a set of virtual environmental sensors using the MQTT and MQTT-SN protocol and displays it in a simple web site dashboard.
 
-TECHNOLOGY USED: Node.js, MQTT, WebSockets, MongoDB, JQuery, Bootstrap CSS and HTML.
+The MQTT is managed using the cloud-based backend of the Google IoT Core platform.
+
+TECHNOLOGY USED: Python, C, RIOT-OS, MQTT-SN, Node.js, MQTT, WebSockets, MongoDB, JQuery, Bootstrap CSS and HTML.
 ___
-## Tutorial
-We recommend you to see before the hands on tutorial on Hackster.io and then the video tutorial for a better understanding.
+## Tutorials
+The following are a series of tutorials on how to set up the system step by step. I recommend you to see before the hands-on tutorials on Hackster.io and then the video tutorials for a better understanding.
 
-* #### [Hands on Tutorial - Hackster.io](https://www.hackster.io/valeriocoretti/cloud-based-iot-system-with-mqtt-32c4dd)
+### Hands-on tutorials
 
-* #### [Video Tutorial - Youtube](https://youtu.be/lChD2VoH1Jk)
+* ##### [Tutorial 1](https://www.hackster.io/valeriocoretti/cloud-based-iot-system-with-mqtt-32c4dd)
+* ##### [Tutorial 2 - Part1](https://www.hackster.io/valeriocoretti/cloud-system-based-on-riot-mqtt-sn-and-google-iot-part-1-6f4cff)
+* ##### [Tutorial 2 - Part2]() (TODO)
+
+### Video tutorials
+* ##### [Video Tutorial 1](https://youtu.be/lChD2VoH1Jk)
+* ##### [Video Tutorial 2]() (TODO)
 ___
 ## Web Dashboard
 The Heroku web dashboard is available here:
 * #### [Dashboard - Heroku](https://iot-assignment1.herokuapp.com)
-
-![img](./img/testvel.gif)
