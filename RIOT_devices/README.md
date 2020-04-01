@@ -7,7 +7,7 @@ This application represents a virtual environmental station that, using the emCu
 
 ## Setup
 
-### Setting up a broker
+### Setting up a broker RSMB
 First of all, we have to setup the Mosquitto Real Simple Message Broker:
 
 1. Get the RSMB here: https://github.com/eclipse/mosquitto.rsmb
@@ -42,7 +42,7 @@ listener 1886 INADDR_ANY
 ./broker_mqtts config.conf
 ```
 
-### Setting up RIOT `native`
+### Setting up RIOT devices
 Before to start the main steps I recommend you to install all the dependencies for RIOT-OS following this guide: https://github.com/RIOT-OS/Tutorials/blob/master/README.md
 
 
@@ -67,7 +67,7 @@ sudo ip a a fec0:affe::1/64 dev tapbr0
 ```
 5. Open a `native` instance:
 ```
-BOARD=native make all term
+make all term BOARD=native
 ```
 
 6. Assign a site-global address with the same prefix within the RIOT:
@@ -94,5 +94,6 @@ sub riot_device
 periodic_pub riot_device
 ```
 
-###System in action
+### System in action
 If everything goes well you have a situation like this:
+![img](../img/broker.png)

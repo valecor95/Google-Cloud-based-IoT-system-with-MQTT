@@ -394,7 +394,7 @@ static const shell_command_t shell_commands[] = {
 
 int main(void)
 {
-    puts("MQTT-SN example application\n");
+    puts("RIOT devices communicate with MQTT-SN\n");
     puts("Type 'help' to get started. Have a look at the README.md for more"
          "information.");
 

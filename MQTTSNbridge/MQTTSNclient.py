@@ -22,7 +22,7 @@ import paho.mqtt.client as mqtt
 import datetime
 import ssl
 
-# Publish to the events or state topic based on the flag.
+# Parameters to authenticate the device on google 
 project_id = 'awesome-sylph-271611'
 cloud_region = 'us-central1'
 registry_id = 'assignment1'
@@ -39,8 +39,6 @@ sub_topic = 'events' if message_type == 'event' else 'state'
 mqtt_topic = '/devices/{}/{}'.format(device_id, sub_topic)
 print mqtt_topic
 
-#jwt_iat = datetime.datetime.utcnow()
-#jwt_exp_mins = jwt_expires_minutes
 client = GoogleMQTTClient.get_client(
     project_id, cloud_region, registry_id,
     device_id, private_key_file, algorithm,
@@ -58,9 +56,7 @@ class Callback:
     self.events.append("disconnected")
 
   def messageArrived(self, topicName, payload, qos, retained, msgid):
-    # Publish "payload" to the MQTT topic. qos=1 means at least once
-    # delivery. Cloud IoT Core also supports qos=0 for at most once
-    # delivery.
+    # Publish "payload" to the MQTT topic.
     client.publish(mqtt_topic, payload, qos=0)
     client.loop()
 
@@ -258,7 +254,7 @@ def publish(topic, payload, retained=False, port=1883, host="localhost"):
 
 
 if __name__ == "__main__":
-	aclient = Client("linh", host="2001:660:3207:400::69", port=1885)
+	aclient = Client("linh", port=1885)
 	aclient.registerCallback(Callback())
 	aclient.connect()
         rc, topic1 = aclient.subscribe("riot_device")
