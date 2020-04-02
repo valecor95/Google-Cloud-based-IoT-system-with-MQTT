@@ -24,43 +24,37 @@ const {eq} = require('./helpers/hbs');
 // Imports the Google Cloud client library
 io.on('connection', function(socket){
   const subscriptionName = 'projects/awesome-sylph-271611/subscriptions/my-subscription1';
-
   // Creates a client; cache this for further use
   const pubSubClient = new PubSub();
 
   function listenForMessages() {
     // References an existing subscription
     const subscription = pubSubClient.subscription(subscriptionName);
-
     // Create an event handler to handle messages
     const messageHandler = message => {
       console.log(`Received message ${message.id}:`);
       console.log(`\tData: ${message.data}`);
       console.log(`\tAttributes: ${message.attributes}`);
-      // Splitting the payload received
       var payload = `${message.data}`.split(";");
 
-      // Insert the new value in the Database
       const newValue = {
         deviceId: payload[0].toString(),
         value: payload[1].toString(),
         date: payload[2].toString()
       };
       new Values(newValue).save();
-
-      // TEMPERATURE websocket displays new value
+      // TEMPERATURE
       if(payload[0] == "device1" || payload[0] == "riot_device1")
-        io.emit("temperature", payload[1]+";"+payload[2]);
-      // HUMIDITY websocket displays new value
+        io.emit("temperature", `${message.data}`);
+      // HUMIDITY
       if(payload[0] == "device2" || payload[0] == "riot_device2")
-        io.emit("humidity", payload[1]+";"+payload[2]);
-      // WIND DIRECTION websocket displays new value
+        io.emit("humidity", `${message.data}`);
+      // HUMIDITY
       if(payload[0] == "device3" || payload[0] == "riot_device3")
-        io.emit("wind", payload[1]+";"+payload[2]);
-      // RAIN HEIGHT websocket displays new value
+        io.emit("wind", `${message.data}`);
+      // HUMIDITY
       if(payload[0] == "device4" || payload[0] == "riot_device4")
-        io.emit("rain", payload[1]+";"+payload[2]);
-
+        io.emit("rain", `${message.data}`);
       // "Ack" (acknowledge receipt of) the message
       message.ack();
     };
@@ -100,10 +94,9 @@ mongoose.connect(uri, {
 
 // GET route for index page
 app.get('/', function (req, res) {
-  // Query to retrieve the last hour values
   Values.find(
     { date: { $gt: parseInt(Date.now()/1000) - 3600 } }
-  ).then(values =>{
+  ).sort({date:-1}).then(values =>{
     res.render('index', {values:values});
   })
 });

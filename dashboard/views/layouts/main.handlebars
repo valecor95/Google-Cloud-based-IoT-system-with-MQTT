@@ -39,23 +39,35 @@
         /// Devices Management
         socket.on('temperature', function(data){
           var payload = data.split(";");
-          $('#latest-temp').html('<h4 align="center">' + payload[0] + '</h4>');
-          $('#lasthour-temp').prepend('<c id='+ payload[1] + '>'+'<font size="2">' + "<"+ payload[0] + "> " +'</font></c>');
+          $('#latest-temp').html('<h4 align="center">' + payload[0] +" = "+ payload[1] + '</h4>');
+          if(payload[0] == 'device1')
+            $('#lasthour-temp').prepend('<c><font size="2">' + "<"+ payload[1] + "> " +'</font></c>');
+          if(payload[0] == 'riot_device1')
+            $('#lasthour-temp-riot').prepend('<c><font size="2">' + "<"+ payload[1] + "> " +'</font></c>');
         });
         socket.on('humidity', function(data){
           var payload = data.split(";");
-          $('#latest-hum').html('<h4 align="center">' + payload[0] + '</h4>');
-          $('#lasthour-hum').prepend('<c id='+ payload[1] + '>'+'<font size="2">' + "<"+ payload[0] + "> " +'</font></c>');
+          $('#latest-hum').html('<h4 align="center">' + payload[0] +" = "+ payload[1] + '</h4>');
+          if(payload[0] == 'device2')
+            $('#lasthour-hum').prepend('<c><font size="2">' + "<"+ payload[1] + "> " +'</font></c>');
+          if(payload[0] == 'riot_device2')
+            $('#lasthour-hum-riot').prepend('<c><font size="2">' + "<"+ payload[1] + "> " +'</font></c>');
         });
         socket.on('wind', function(data){
           var payload = data.split(";");
-          $('#latest-wind').html('<h4 align="center">' + payload[0] + '</h4>');
-          $('#lasthour-wind').prepend('<c id='+ payload[1] + '>'+'<font size="2">' + "<"+ payload[0] + "> " +'</font></c>');
+          $('#latest-wind').html('<h4 align="center">' + payload[0] +" = "+ payload[1] + '</h4>');
+          if(payload[0] == 'device3')
+            $('#lasthour-wind').prepend('<c><font size="2">' + "<"+ payload[1] + "> " +'</font></c>');
+          if(payload[0] == 'riot_device3')
+            $('#lasthour-wind-riot').prepend('<c><font size="2">' + "<"+ payload[1] + "> " +'</font></c>');
         });
         socket.on('rain', function(data){
           var payload = data.split(";");
-          $('#latest-rain').html('<h4 align="center">' + payload[0] + '</h4>');
-          $('#lasthour-rain').prepend('<c id='+ payload[1] + '>'+'<font size="2">' + "<"+ payload[0] + "> " +'</font></c>');
+          $('#latest-rain').html('<h4 align="center">' + payload[0] +" = "+ payload[1] + '</h4>');
+          if(payload[0] == 'device4')
+            $('#lasthour-hum').prepend('<c><font size="2">' + "<"+ payload[1] + "> " +'</font></c>');
+          if(payload[0] == 'riot_device4')
+            $('#lasthour-rain-riot').prepend('<c><font size="2">' + "<"+ payload[1] + "> " +'</font></c>');
         });
       });
     </script>
