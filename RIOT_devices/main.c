@@ -32,7 +32,7 @@
 #include "xtimer.h"
 
 #ifndef EMCUTE_ID
-#define EMCUTE_ID           ("gertrud")
+#define EMCUTE_ID           ("gertrud2")
 #endif
 #define EMCUTE_PORT         (1883U)
 #define EMCUTE_PRIO         (THREAD_PRIORITY_MAIN - 1)
@@ -229,91 +229,23 @@ static double getTime(void){
   timer = (unsigned long)time(NULL);
 
   seconds = difftime(timer,mktime(&y2k));
-
-  //printf ("%.f seconds since January 1, 2000 in the current timezone\n", seconds);
-
+  
   return seconds;
 }
 
-static char* TemperaturePayload(char* id){
-	int upper = 50;
-    int lower = -50;
+static char* buildPayload(char* id){
     srand(time(NULL));
-	int num = (rand() % (upper - lower + 1)) + lower;
-	char temperature[8];
-	sprintf(temperature, "%d °C", num);
-	char time[10];
-	sprintf(time, "%.f", getTime());
-		
-	char* payload = malloc(sizeof(char)*80);
-	strcpy(payload, id);
-	strcat(payload, ";");
-	strcat(payload, temperature);
-	strcat(payload, ";");
-	strcat(payload, time);
-	
-	return payload;
-}
+	int temperature = (rand() % (50 - (-50)) + 1) + (-50);
+    int humidity = (rand() % (100 - 0 + 1)) + 0;
+    int wind_direction = (rand() % (360 - 0 + 1)) + 0;
+    int wind_intensity = (rand() % (100 - 0 + 1)) + 0;
+    int rain_height = (rand() % (50 - 0 + 1)) + 0;
 
-static char* humidityPayload(char* id){
-	int upper = 100;
-    int lower = 0;
-    srand(time(NULL));
-	int num = (rand() % (upper - lower + 1)) + lower;
-	char humidity[7];
-	sprintf(humidity, "%d %%", num);
-	char time[10];
-	sprintf(time, "%.f", getTime());
-		
-	char* payload = malloc(sizeof(char)*80);
-	strcpy(payload, id);
-	strcat(payload, ";");
-	strcat(payload, humidity);
-	strcat(payload, ";");
-	strcat(payload, time);
-	
-	return payload;
-}
+    char* payload = malloc(sizeof(char)*250);
+	sprintf(payload, "{\"deviceId\": \"%s\",\"temperature\": %d,\"humidity\": %d,\"wind_direction\": %d,\"wind_intensity\": %d,\"rain_height\": %d, \"date\": %.f}", 
+                        id, temperature, humidity, wind_direction, wind_intensity, rain_height, getTime());
 
-
-static char* windDirectionPayload(char* id){
-	int upper = 360;
-    int lower = 0;
-    srand(time(NULL));
-	int num = (rand() % (upper - lower + 1)) + lower;
-	char wdirection[7];
-	sprintf(wdirection, "%d °", num);
-	char time[10];
-	sprintf(time, "%.f", getTime());
-		
-	char* payload = malloc(sizeof(char)*80);
-	strcpy(payload, id);
-	strcat(payload, ";");
-	strcat(payload, wdirection);
-	strcat(payload, ";");
-	strcat(payload, time);
-	
-	return payload;
-}
-
-static char* rainHeightPayload(char* id){
-	int upper = 50;
-    int lower = 0;
-    srand(time(NULL));
-	int num = (rand() % (upper - lower + 1)) + lower;
-	char rheight[10];
-	sprintf(rheight, "%d mm/h", num);
-	char time[10];
-	sprintf(time, "%.f", getTime());
-		
-	char* payload = malloc(sizeof(char)*80);
-	strcpy(payload, id);
-	strcat(payload, ";");
-	strcat(payload, rheight);
-	strcat(payload, ";");
-	strcat(payload, time);
-	
-	return payload;
+    return payload;
 }
 
 // Publish random values periodically (5 sec)
@@ -321,10 +253,7 @@ static int cmd_pub(int argc, char **argv)
 {
     emcute_topic_t t;
     unsigned flags = EMCUTE_QOS_0;
-    char* id1 = "riot_device1";
-    char* id2 = "riot_device2";
-    char* id3 = "riot_device3";
-    char* id4 = "riot_device4";
+    char* id = "riot_station";
 
     if (argc < 2) {
         printf("usage: %s <topic name>\n", argv[0]);
@@ -342,36 +271,8 @@ static int cmd_pub(int argc, char **argv)
 
     /* step 2: publish random data periodically */
     while(1){
-		char* temperature = TemperaturePayload(id1);
-        char* humidity = humidityPayload(id2);
-        char* wdirection = windDirectionPayload(id3);
-        char* rheight = rainHeightPayload(id4);
-
-		//printf("Payload: %s\n", payload);
-		
-        // TEMPERATURE 
-		if (emcute_pub(&t, temperature, strlen(temperature), flags) != EMCUTE_OK) {
-			printf("error: unable to publish data to topic '%s [%i]'\n",t.name, (int)t.id);
-			return 1;
-		}
-        xtimer_sleep(2);
-    
-        // HUMIDITY
-        if (emcute_pub(&t, humidity, strlen(humidity), flags) != EMCUTE_OK) {
-			printf("error: unable to publish data to topic '%s [%i]'\n",t.name, (int)t.id);
-			return 1;
-		}
-        xtimer_sleep(2);
-        
-        // WIND DIRECTION
-        if (emcute_pub(&t, wdirection, strlen(wdirection), flags) != EMCUTE_OK) {
-			printf("error: unable to publish data to topic '%s [%i]'\n",t.name, (int)t.id);
-			return 1;
-		}
-        xtimer_sleep(2);
-
-        // RAIN HEIGHT
-        if (emcute_pub(&t, rheight, strlen(rheight), flags) != EMCUTE_OK) {
+		char* payload = buildPayload(id);
+        if (emcute_pub(&t, payload, strlen(payload), flags) != EMCUTE_OK) {
 			printf("error: unable to publish data to topic '%s [%i]'\n",t.name, (int)t.id);
 			return 1;
 		}
@@ -394,7 +295,7 @@ static const shell_command_t shell_commands[] = {
 
 int main(void)
 {
-    puts("RIOT devices communicate with MQTT-SN\n");
+    puts("MQTT-SN example application\n");
     puts("Type 'help' to get started. Have a look at the README.md for more"
          "information.");
 

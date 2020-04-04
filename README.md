@@ -8,6 +8,12 @@ The MQTT is managed using the cloud-based backend of the Google IoT Core platfor
 
 Technology used: Python, C, RIOT-OS, MQTT-SN, Node.js, MQTT, WebSockets, MongoDB, JQuery, Bootstrap CSS and HTML.
 ___
+## Assignments
+The following are the branches that contain all the assignments one after the other:
+* ##### [Assignment 1](https://github.com/valecor95/Google-Cloud-based-IoT-system-with-MQTT/tree/assignment1)
+* ##### [Assignment 2](https://github.com/valecor95/Google-Cloud-based-IoT-system-with-MQTT/tree/assignment2)
+
+___
 ## Tutorials
 The following are a series of tutorials on how to set up the system step by step. I recommend you to see before the hands-on tutorials on Hackster.io and then the video tutorials for a better understanding.
 
@@ -25,7 +31,7 @@ The Heroku web dashboard is available here:
 * #### [Dashboard - Heroku](https://iot-assignment1.herokuapp.com)
 ___
 ## Author 
-###### Valerio Coretti:
+#### Valerio Coretti:
 * [LinkedIn](https://www.linkedin.com/in/valerio-coretti-2913721a3/)
 * [YouTube](https://www.youtube.com/channel/UCfOMLbUeIE53mk2k_40gjoA?view_as=subscriber)
 * [Hackster.io](https://www.hackster.io/valeriocoretti)
