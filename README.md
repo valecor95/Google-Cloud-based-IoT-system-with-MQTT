@@ -1,5 +1,5 @@
 # Google-Cloud-based-IoT-system-with-MQTT
-<img src="../img/home.png" width="700" height="500" />
+<img src="./img/home.png" width="700" height="500" />
 
 
 This is a project made for the Internet of Things class at the Sapienza University of Rome.
