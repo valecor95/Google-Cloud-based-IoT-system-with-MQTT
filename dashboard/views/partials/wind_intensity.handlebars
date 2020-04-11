@@ -1,0 +1,34 @@
+<div class="row">
+  <div class="col-sm">
+      <div class="card card-body mb-2 col-sm" style="background-color: #9FF781;">
+        <h4 align="center">WIND INSTENSITY &nbsp<i class="fas fa-wind"></i></h4>
+        <div class="card card-body mb-2">
+          <h6 align="center">Latest values received</h6>
+          <div id="latest-wind-int"></div>
+          <hr/>
+        </div>
+        <div class="card card-body mb-2">
+          <h6 align="center">Average</h6>
+          <div id="avg-wind-int"></div>
+          <hr/>
+        </div>
+        <div class="card card-body mb-2">
+          <h6 align="center">Values received during last hour</h6>
+            <div class="card card-body mb-2">
+              <div id="lasthour-wind-int">
+                {{#each values}}
+                  <c id="{{this.date}}"><font size=2><{{this.wind_intensity}} m/s></font></c>
+                {{/each}}
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="card card-body mb-2 col-sm">
+        <h4 align="center">ANALYTICS &nbsp<i class="fas fa-chart-bar"></i></h4>
+        <canvas id="wind-int-chart"></canvas>
+        <canvas id="wint-chart-avg"></canvas>
+      </div>
+    </div>
+  </div>

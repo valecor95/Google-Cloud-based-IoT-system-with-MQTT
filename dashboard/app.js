@@ -23,6 +23,12 @@ const {eq} = require('./helpers/hbs');
 /********************************************************************************************************/
 // Imports the Google Cloud client library
 io.on('connection', function(socket){
+  var values = Values.find(
+    { date: { $gt: parseInt(Date.now()/1000) - 3600 } }
+  ).sort({date:-1}).then(values => {
+    io.emit("lastvalues", values);
+  });
+
   const subscriptionName = 'projects/awesome-sylph-271611/subscriptions/my-subscription1';
   // Creates a client; cache this for further use
   const pubSubClient = new PubSub();
@@ -33,28 +39,31 @@ io.on('connection', function(socket){
     // Create an event handler to handle messages
     const messageHandler = message => {
       console.log(`Received message ${message.id}:`);
-      console.log(`\tData: ${message.data}`);
+      console.log('\tData:' + message.data);
       console.log(`\tAttributes: ${message.attributes}`);
-      var payload = `${message.data}`.split(";");
+      var payload = JSON.parse(message.data);
 
       const newValue = {
-        deviceId: payload[0].toString(),
-        value: payload[1].toString(),
-        date: payload[2].toString()
+        deviceId: payload.deviceId,
+        temperature: payload.temperature,
+        humidity: payload.humidity,
+        wind_direction: payload.wind_direction,
+        wind_intensity: payload.wind_intensity,
+        rain_height: payload.rain_height,
+        date: payload.date
       };
       new Values(newValue).save();
+
       // TEMPERATURE
-      if(payload[0] == "device1" || payload[0] == "riot_device1")
-        io.emit("temperature", `${message.data}`);
+      io.emit("temperature", (payload.deviceId + ";" + payload.temperature + ";" + payload.date).toString());
       // HUMIDITY
-      if(payload[0] == "device2" || payload[0] == "riot_device2")
-        io.emit("humidity", `${message.data}`);
-      // HUMIDITY
-      if(payload[0] == "device3" || payload[0] == "riot_device3")
-        io.emit("wind", `${message.data}`);
-      // HUMIDITY
-      if(payload[0] == "device4" || payload[0] == "riot_device4")
-        io.emit("rain", `${message.data}`);
+      io.emit("humidity", (payload.deviceId + ";" + payload.humidity + ";" + payload.date).toString());
+      // WIND DIRECTION
+      io.emit("wind-dir", (payload.deviceId + ";" + payload.wind_direction + ";" + payload.date).toString());
+      // WIND INTENSITY
+      io.emit("wind-int", (payload.deviceId + ";" + payload.wind_intensity + ";" + payload.date).toString());
+      // RAIN HEIGHT
+      io.emit("rain", (payload.deviceId + ";" + payload.rain_height + ";" + payload.date).toString());
       // "Ack" (acknowledge receipt of) the message
       message.ack();
     };

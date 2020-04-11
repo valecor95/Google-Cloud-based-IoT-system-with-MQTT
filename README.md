@@ -1,5 +1,6 @@
 # Google-Cloud-based-IoT-system-with-MQTT
-![img](./img/testvel.gif)
+<img src="../img/home.png" width="700" height="500" />
+
 
 This is a project made for the Internet of Things class at the Sapienza University of Rome.
 It is a cloud-based IoT system that collects information from a set of virtual environmental sensors using the MQTT and MQTT-SN protocol and displays it in a simple web site dashboard.

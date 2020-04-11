@@ -1,0 +1,16 @@
+{
+  "name": "station",
+  "version": "1.0.0",
+  "description": "virtual devices send random values",
+  "main": "station.js",
+  "scripts": {
+    "start": "node station.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "mqtt": "^3.0.0"
+  }
+}
