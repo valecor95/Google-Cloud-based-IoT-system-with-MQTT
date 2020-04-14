@@ -75,7 +75,7 @@ Gclient = google.get_client(project_id, cloud_region, registry_id,
                             device_id, private_key_file, algorithm,
                             ca_certs, mqtt_bridge_hostname, mqtt_bridge_port)
 
-# Loop to receive messages and intercept Ctrl+c to disconnect in a correct way
+# Receive messages and intercept the interrupt signal
 try:
     while True:
         pass

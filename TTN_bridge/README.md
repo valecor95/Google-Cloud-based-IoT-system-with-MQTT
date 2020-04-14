@@ -20,3 +20,4 @@ python3 TTNclient.py
 ```
 
 If everything goes well you should have this view:
+![img](../img/ttn_bridge.png)

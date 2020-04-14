@@ -6,7 +6,7 @@ This application represents a virtual environmental station that, periodically, 
 * wind intensity (0... 100 m/s)
 * rain height (0... 50 mm / h)
 
-Each virtual sensor will send these random values to The Thinghs Network trough the LoRaWAN real device, running on IoT-LAB. The script for the sensors are based RIOT-OS, and  generates a JSON payload structured as follow:
+Each virtual sensor will send these random values to The Things Network trough the LoRaWAN real device, running on IoT-LAB. The script for the sensors are based RIOT-OS, and  generates a JSON payload structured as follow:
 
       const payload = {
       deviceId: "station",
@@ -71,3 +71,5 @@ In this section, I'll explain you how to submit this application with one LoRa n
 ```
 
 NOTE: the complete tutorial to use LoRaWAN node in IoT-LAB is available here: https://www.iot-lab.info/tutorials/riot-ttn/
+
+![img](../img/lora.gif)
