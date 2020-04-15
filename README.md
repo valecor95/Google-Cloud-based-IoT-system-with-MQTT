@@ -2,11 +2,11 @@
 ![img](./img/system2.gif)
 
 This is a project made for the Internet of Things class at the Sapienza University of Rome.
-It is a cloud-based IoT system that collects information from a set of virtual environmental sensors using the MQTT and MQTT-SN protocol and displays it in a simple web site dashboard.
+It is a cloud-based IoT system that collects information from a set of virtual environmental sensors using the MQTT, MQTT-SN, and LoRaWAN protocol and displays it in a simple web site dashboard.
 
 The MQTT is managed using the cloud-based backend of the Google IoT Core platform.
 
-Technology used: Python, C, RIOT-OS, MQTT-SN, Node.js, MQTT, WebSockets, MongoDB, JQuery, Bootstrap CSS and HTML.
+Technology used: Python, C, RIOT-OS, MQTT-SN, LoRaWAN, Node.js, MQTT, WebSockets, MongoDB, JQuery, Bootstrap CSS and HTML.
 ___
 ## Assignments
 The following are the branches that contain all the assignments one after the other:
