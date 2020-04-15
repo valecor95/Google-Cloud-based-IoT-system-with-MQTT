@@ -1,9 +1,24 @@
 ## About
-This application represents a virtual environmental station that, using the emCute (MQTT-SN) module in RIOT, periodically, generates random values for:
+This application represents a virtual environmental station that, periodically, generates random values for:
 * temperature (-50... 50 Celsius)
 * humidity (0... 100%)
 * wind direction (0... 360 degrees)
-* rain height (0... 50 mm / h) 
+* wind intensity (0... 100 m/s)
+* rain height (0... 50 mm / h)
+
+Each virtual sensor will publish these random values on the MQTT-SN RSMB broker. The script for the sensors are based on emCute module of RIOT-OS, and  generates a JSON payload structured as follow:
+
+        const payload = {
+            deviceId: "station",
+            temperature: getRndInteger(-50, 50),
+            humidity: getRndInteger(0, 100),
+            wind_direction: getRndInteger(0, 360),
+            wind_intensity: getRndInteger(0, 100),
+            rain_height: getRndInteger(0, 50),
+            date: parseInt(Date.now()/1000)
+        }
+        
+The date is important for the database and the dashboard that will have to show the last hour values received for every sensor.
 
 ## Setup
 

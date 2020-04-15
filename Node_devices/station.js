@@ -3,7 +3,7 @@ const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const mqtt = require('mqtt');
 
-console.log('TEMPERATURE SENSOR --- ACTIVATED');
+console.log('STATION --- ACTIVATED');
 
 // ----------------------------------------------------------------------------- JWT CONFIGURATION FUNCTION
 // Create a Cloud IoT Core JWT for the given project id, signed with the given
@@ -35,23 +35,29 @@ const publishAsync = (
       return Math.floor(Math.random() * (max - min)) + min;
     }
 
-    const temperature = getRndInteger(-50, 50) + ' °C';
-    var date = parseInt(Date.now()/1000);
-    const payload = deviceId+";"+temperature+";"+date;
+    const payload = {
+        deviceId: "station",
+        temperature: getRndInteger(-50, 50),
+        humidity: getRndInteger(0, 100),
+        wind_direction: getRndInteger(0, 360),
+        wind_intensity: getRndInteger(0, 100),
+        rain_height: getRndInteger(0, 50),
+        date: parseInt(Date.now()/1000)
+    }
+
     // Publish "payload" to the MQTT topic. qos=1 means at least once delivery.
-    console.log('Publishing message:', payload);
-    client.publish(mqttTopic, payload, {qos: 1});
+    console.log('Publishing message:', JSON.stringify(payload));
+    client.publish(mqttTopic, JSON.stringify(payload), {qos: 1});
 
     // Recursive function to simulate the periodically sent of values
     publishAsync(mqttTopic, client);
   }, 5000);
 };
 
-
   // --------------------------------------------------------------------------- SUBSCRIBING
   // Arguments of the google cloud platform
   const projectId = `awesome-sylph-271611`;
-  const deviceId = `device1`;
+  const deviceId = `station`;
   const registryId = `assignment1`;
   const region = `us-central1`;
   const algorithm = `RS256`;
