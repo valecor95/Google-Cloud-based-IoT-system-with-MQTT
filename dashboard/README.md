@@ -14,7 +14,7 @@ The main functionalities of the dashboard are:
 #### Backend
 The process flow is very simple
 
-![img](../img/latest.jpeg)
+![img](../img/backend2.png)
 
 When the server starts, it listens for messages from the Pub/Sub service of Google Cloud (line 65) accessing to the subscription created on the platform (line 32). When a message arrives, the server pull it (line 63) and first of all sends it to the MongoDB database (line 40-45), then shows it in the dashboard through the WebSocket connection (line 47-57). Finally, it sends an ack to the Cloud (line 59). This whole process works asynchronously.
 

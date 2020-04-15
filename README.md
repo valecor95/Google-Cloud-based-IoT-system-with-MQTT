@@ -27,7 +27,7 @@ The following are a series of tutorials on how to set up the system step by step
 ### Video tutorials
 * ##### [Video Tutorial 1](https://youtu.be/lChD2VoH1Jk)
 * ##### [Video Tutorial 2](https://youtu.be/jvvW0CW-DJM)
-* ##### [Video Tutorial 3]() (TODO)
+* ##### [Video Tutorial 3](https://youtu.be/K1Z90tZD1KU)
 ___
 ## Web Dashboard
 The Heroku web dashboard is available here:
