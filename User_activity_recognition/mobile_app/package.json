@@ -1,0 +1,24 @@
+{
+  "name": "uar",
+  "version": "1.0.0",
+  "description": "Web application measuring user activity recognition",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.0",
+    "fs": "0.0.1-security",
+    "handlebars": "4.5.3",
+    "jsonwebtoken": "^8.5.1",
+    "method-override": "^3.0.0",
+    "moment": "^2.24.0",
+    "mongoose": "^5.9.14",
+    "mqtt": "^4.0.1",
+    "socket.io": "^2.2.0"
+  }
+}
