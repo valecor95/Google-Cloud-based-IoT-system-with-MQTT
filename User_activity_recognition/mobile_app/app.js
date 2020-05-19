@@ -3,7 +3,6 @@ const path = require('path');                       //for path navigation
 const bodyParser = require('body-parser');          //to access at req.value
 const methodOverride = require('method-override');  //needs for edit and delete
 const exphbs = require('express-handlebars');       //front-end
-const mongoose = require('mongoose');               //database
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const mqtt = require('mqtt');
@@ -13,10 +12,6 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
 // ----------------------------------------------------------------------------- SERVER DEFINITIONS
-//load values model
-require('./models/User');
-const Users = mongoose.model('users');
-
 //handlebars helpers
 const {stripTags} = require('./helpers/hbs');
 const {eq} = require('./helpers/hbs');
@@ -35,18 +30,6 @@ app.use(express.static(path.join(__dirname, '.')));
 //method override middleware
 app.use(methodOverride('_method'));
 
-// Map global promise - get rid of warning
-mongoose.Promise = global.Promise;
-//connect to mongoose
-const uri = "mongodb+srv://assignment1:5JuACpmKysNwVGae@cluster0-1fa34.gcp.mongodb.net/IoT-assignment1";
-mongoose.connect(uri, {
-  useNewUrlParser: true
-})
-  .then(() => {
-    console.log('MongoDb Connected..');
-  })
-  .catch(err => console.log(err));
-
 //to use external resources
 app.use(express.static(__dirname + '/public'));
 
@@ -63,28 +46,6 @@ console.log(`Server started on port ${port}`);
 
 
 io.on('connection', function(socket){
-
-  /*
-  // Check if the user is in the database
-  socket.on('user', function(data){
-    Users.find(
-      { user_id: data.user }
-    ).then(user =>{
-      if(user == ''){
-        newUser = {
-          user_id: data,
-          date: Date.now() / 1000,
-          activities: []
-        }
-        new Users(newUser).save();
-      }
-      else{
-
-      }
-    })
-    
-  });
-  */
   // ----------------------------------------------------------------------------- GOOGLE CLIENT
 
   // ----------------------------------------------------------------------------- JWT CONFIGURATION FUNCTION
@@ -106,25 +67,6 @@ io.on('connection', function(socket){
 
   const publishAsync = (mqttTopic, client) => {
     socket.on('values', function(data){
-      /*
-      // Add the new prediction in the DB and check the date
-      Users.find(
-        { user_id: data.user_id }
-      ).then(user =>{
-        var newDate = Date.now() / 1000;
-        // Update record, if necessary, for the last hour values received
-        if(newDate - user.date >= 3600){
-          Users.update(
-            { user_id: data.user_id },
-            { date: newDate,
-              activities: []
-            }
-          );
-        }
-        data.activity == 1 ? user.activities.push("STILL") : user.activities.push("MOVING");
-        user.save();
-      })
-      */
       console.log('PUBLISH: ' + JSON.stringify(data));
       client.publish(mqttTopic, JSON.stringify(data), {qos: 1});
     });

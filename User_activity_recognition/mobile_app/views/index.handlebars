@@ -7,14 +7,120 @@
         <div id="status_acc"></div>
         <div align="center" id="result_acc"></div>
         <div id="warning"></div>
-
-        <div class="card card-body mb-2">
-            <h6 align="center">Values received during last hour</h6>
-            <div class="card card-body mb-2">
-                <div id="lasthour-uar">
-                </div>
-            </div>
-        </div>
     </div>
     </div>
 </div>
+
+<script>
+    $(function () {
+        var socket = io.connect('https://uar-mobile-app.herokuapp.com', {transports:['websocket']});
+        //var socket = io.connect('http://localhost:5001/', {transports:['websocket']});
+
+        //var localStorage = window.localStorage;
+
+        var values_acc = document.getElementById('values_acc');
+        var status_acc = document.getElementById('status_acc');
+        var result_acc = document.getElementById('result_acc');
+        var warning = document.getElementById('warning');
+
+        var i = 0;
+
+        /*
+        for(j = (parseInt(Date.now() / 1000)) - 3600; j < (parseInt(Date.now() / 1000)); j++){
+            if(localStorage.getItem(j.toString()) != null){
+                $('#lasthour-uar').prepend('<b><font size=2>&#60;'+localStorage.getItem(j.toString())+'&#62;</font></b>');
+            }
+        }
+        */
+
+        /******************************************** COOKIES LIBRARY ****************************/
+        function setCookie(name) {
+            document.cookie = "username=" + name;
+        }
+
+        function getCookie() {
+            var ca = document.cookie.split('=');
+            return ca[1];
+        }
+
+        function checkCookie() {
+            var user = getCookie();
+            if (user == "" || user === undefined) {
+            user = prompt("Please enter your name:", "");
+                if (user != "" && user != null)
+                    setCookie(user);
+            }
+        }
+        
+        checkCookie();
+        /******************************************************************************************/
+
+        function predict(x, y, z){
+            let magnitude = Math.hypot(x, y, z);
+            //status_acc.innerHTML = '<h4 class="text-center">'+magnitude+'</h1>'
+            if(magnitude > 9.05 && magnitude < 9.95) return 1;
+            else return 0;
+        }
+
+        function startApp() {
+            let acc = new Accelerometer({frequency: 4});
+
+            acc.addEventListener('reading', function(e) {
+                i++;
+                //values_acc.innerHTML = 'Accelerometer<br> x: ' + e.target.x + '<br> y: ' + e.target.y + '<br> z: ' + e.target.z;
+                var prediction = predict(e.target.x, e.target.y, e.target.z);
+                
+                // Periodic sending of values
+                if(i%4 == 0){
+                    /******************************* CLOUD BASED ***********************************/
+                    socket.emit('values', {
+                        user_id: getCookie(),
+                        x: e.target.x,
+                        y: e.target.y,
+                        z: e.target.z,
+                        flag: 0
+                    });
+
+                    /******************************* EDGE BASED ***********************************/
+                    if(prediction == 1){
+                        //localStorage.setItem((parseInt(Date.now() / 1000)).toString(), "STILL");
+                        //$('#lasthour-uar').prepend('<b><font size=2>&#60;STILL&#62;</font></b>')
+                        socket.emit('values', {
+                            user_id: getCookie(),
+                            activity: 'STILL',
+                            flag: 1
+                        });
+                    }
+                    else{
+                        //localStorage.setItem((parseInt(Date.now() / 1000)).toString(), "MOVING");
+                        //$('#lasthour-uar').prepend('<b><font size=2>&#60;MOVING&#62;</font></b>')
+                        socket.emit('values', {
+                            user_id: getCookie(),
+                            activity: 'MOVING',
+                            flag: 1
+                        });
+                    }
+
+                }
+                if(prediction  == 1) result_acc.innerHTML = '<i class="text-center fas fa-male fa-10x"><h1 class="display-4 text-center">STILL</h1></i>'
+                else result_acc.innerHTML = '<i class="text-center fas fa-running fa-10x"><h1 class="display-4 text-center">MOVING</h1></i>'
+            });
+            acc.start();
+        }
+
+        if ('Accelerometer' in window) {
+            navigator.permissions.query({ name: "accelerometer" }).then(result => {
+            if (result.state != 'granted') {
+                warning.innerHTML = "Sorry, we're not allowed to access sensors on your device..";
+                return;
+            }
+            startApp();
+            }).catch(err => {
+                console.log("Integration with Permissions API is not enabled, still try to start");
+                startApp();
+            });
+        } else {
+            warning.innerHTML = 'Your browser doesn\'t support sensors. Google chrome and HTTPS are required'
+        }
+    });
+</script>

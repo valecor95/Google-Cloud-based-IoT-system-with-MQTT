@@ -1,17 +1,19 @@
-<nav class="navbar navbar-expand-sm navbar-dark bg-success mb-3">
-  <div class="container">
-    <ul class="navbar-nav">
-      <p><b><font size="6" color="white"><i class="fab fa-google"></i><i class="fas fa-cloud"></i>&nbsp Google Cloud IoT Core - MQTT</font></b></p>
-    </ul>
-    <ul class="navbar-nav ml-auto">
-      <p><b><font size="2" color="white">Created by Valerio Coretti 1635747</font></b></p>
-    </ul>
-  </div>
-</nav>
 <div class="container">
-    {{> temperature}}
-    {{> humidity}}
-    {{> wind_direction}}
-    {{> wind_intensity}}
-    {{> rain_height}}
+    <h1 class="display-1 text-center">Welcome</h1>
+    <h5 class="text-center">This is the dashboard of the assignmets for the Internet of Things class of the course Engineering in Computer Science at 
+        Sapienza University of Rome</h5>
+    <hr><br>
+    <h1 class="display-4">Environmental stations</h1>
+    <h5>A Google cloud-based IoT system that collects information from a set of virtual environmental sensors using the MQTT protocol. In this 
+        dashboard we display the last value received and values received during the last hour. Furthermore there are two charts, one for the received 
+        values and one for the progressive average of the values</h5>
+    <h5>Further details here: <a href="https://github.com/valecor95/Google-Cloud-based-IoT-system-with-MQTT/tree/assignment3">GitHub repository</a></h5>
+    <a href="/environmentalstations"><h3>Dashboard - Environmental stations </h3></a>
+    <hr><br>
+    <h1 class="display-4">User activity recognition</h1>
+    <h5>A mobile application to provide a crowd-sensing functionality. This is a simple activity recognition model that detects if the user is standing 
+        still, or walking/running/being on a vehicle. In this dashboard we display the latest values and the values received during the last hour from 
+        all the sensors and the resulting activity.</h5>
+    <h5>Further details here: <a href="">TODO</a></h5>
+    <a href="/useractivityrecognition"><h3>Dashboard - User activity recognition</h3></a>
 </div>

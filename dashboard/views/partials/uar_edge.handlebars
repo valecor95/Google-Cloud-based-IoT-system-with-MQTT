@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-sm">
+      <div class="card card-body mb-2 col-sm" style="background-color: rgb(59, 189, 109);">
+        <h4 align="center">USER ACTIVITY RECOGNITION - Edge based &nbsp<i class="fas fa-chart-bar"></i></h4>
+        <div class="card card-body mb-2">
+          <h6 align="center">Latest values received</h6>
+          <div id="latest-uar-edge"></div>
+          <hr/>
+        </div>
+        <div class="card card-body mb-2">
+          <h6 align="center">Values received during last hour</h6>
+            <div class="card card-body mb-2">
+              <div id="lasthour-uar-edge">
+                {{#each values_edge}}
+                  <c id="{{this.date}}"><font size=2>&#60;{{this.deviceId}}: {{this.status}}&#62;</font></c>
+                {{/each}}
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="card card-body mb-2 col-sm">
+        <h4 align="center">STATUS &nbsp<i class="fas fa-running"></i></h4>
+        <div align="center" id="status-edge"></div>
+      </div>
+    </div>
+  </div>
