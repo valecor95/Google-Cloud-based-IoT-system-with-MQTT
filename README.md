@@ -24,7 +24,7 @@ The following are a series of tutorials on how to set up the system step by step
 * ##### [Tutorial 1](https://www.hackster.io/valeriocoretti/google-cloud-based-iot-system-with-mqtt-32c4dd)
 * ##### [Tutorial 2](https://www.hackster.io/valeriocoretti/google-cloud-based-iot-system-with-riot-os-and-mqtt-sn-6f4cff)
 * ##### [Tutorial 3](https://www.hackster.io/valeriocoretti/google-cloud-based-iot-system-with-mqtt-and-lorawan-e8e5b0)
-* ##### [Tutorial 4]() (TODO)
+* ##### [Tutorial 4](https://www.hackster.io/valeriocoretti/user-activity-recognition-with-generic-sensor-api-and-google-3c6f88)
 
 ### Video tutorials
 * ##### [Video Tutorial 1](https://youtu.be/lChD2VoH1Jk)
