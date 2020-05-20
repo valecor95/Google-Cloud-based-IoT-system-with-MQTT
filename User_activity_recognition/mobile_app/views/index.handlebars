@@ -16,22 +16,12 @@
         var socket = io.connect('https://uar-mobile-app.herokuapp.com', {transports:['websocket']});
         //var socket = io.connect('http://localhost:5001/', {transports:['websocket']});
 
-        //var localStorage = window.localStorage;
-
         var values_acc = document.getElementById('values_acc');
         var status_acc = document.getElementById('status_acc');
         var result_acc = document.getElementById('result_acc');
         var warning = document.getElementById('warning');
 
         var i = 0;
-
-        /*
-        for(j = (parseInt(Date.now() / 1000)) - 3600; j < (parseInt(Date.now() / 1000)); j++){
-            if(localStorage.getItem(j.toString()) != null){
-                $('#lasthour-uar').prepend('<b><font size=2>&#60;'+localStorage.getItem(j.toString())+'&#62;</font></b>');
-            }
-        }
-        */
 
         /******************************************** COOKIES LIBRARY ****************************/
         function setCookie(name) {
@@ -57,7 +47,6 @@
 
         function predict(x, y, z){
             let magnitude = Math.hypot(x, y, z);
-            //status_acc.innerHTML = '<h4 class="text-center">'+magnitude+'</h1>'
             if(magnitude > 9.05 && magnitude < 9.95) return 1;
             else return 0;
         }
@@ -67,7 +56,6 @@
 
             acc.addEventListener('reading', function(e) {
                 i++;
-                //values_acc.innerHTML = 'Accelerometer<br> x: ' + e.target.x + '<br> y: ' + e.target.y + '<br> z: ' + e.target.z;
                 var prediction = predict(e.target.x, e.target.y, e.target.z);
                 
                 // Periodic sending of values
@@ -83,8 +71,6 @@
 
                     /******************************* EDGE BASED ***********************************/
                     if(prediction == 1){
-                        //localStorage.setItem((parseInt(Date.now() / 1000)).toString(), "STILL");
-                        //$('#lasthour-uar').prepend('<b><font size=2>&#60;STILL&#62;</font></b>')
                         socket.emit('values', {
                             user_id: getCookie(),
                             activity: 'STILL',
@@ -92,15 +78,12 @@
                         });
                     }
                     else{
-                        //localStorage.setItem((parseInt(Date.now() / 1000)).toString(), "MOVING");
-                        //$('#lasthour-uar').prepend('<b><font size=2>&#60;MOVING&#62;</font></b>')
                         socket.emit('values', {
                             user_id: getCookie(),
                             activity: 'MOVING',
                             flag: 1
                         });
                     }
-
                 }
                 if(prediction  == 1) result_acc.innerHTML = '<i class="text-center fas fa-male fa-10x"><h1 class="display-4 text-center">STILL</h1></i>'
                 else result_acc.innerHTML = '<i class="text-center fas fa-running fa-10x"><h1 class="display-4 text-center">MOVING</h1></i>'

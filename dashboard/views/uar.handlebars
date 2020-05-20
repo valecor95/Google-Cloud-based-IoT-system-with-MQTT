@@ -20,9 +20,8 @@
         //////// CLOUD
         socket.on('status_cloud', function(data){
             var payload = JSON.parse(data);
-            var magnitude = (Math.hypot(payload.x, payload.y, payload.z)).toFixed(4);
-            $('#latest-uar-cloud').html('<h4 align="center">'+payload.deviceId+': ' + magnitude + '</h4>');
-            $('#lasthour-uar-cloud').prepend('<c><font size="2">&#60;'+payload.deviceId+': '+ magnitude +'&#62;</font></c>');
+            $('#latest-uar-cloud').html('<h4 align="center">'+payload.deviceId+': ' + payload.magnitude + '</h4>');
+            $('#lasthour-uar-cloud').prepend('<c><font size="2">&#60;'+payload.deviceId+': '+ payload.magnitude +'&#62;</font></c>');
             if(payload.status == 1) 
                 $('#status-cloud').html('<i class="fas fa-male fa-10x"><h1 class="display-4 text-center">'+payload.deviceId+': STILL</h1></i>')
             else
@@ -34,7 +33,10 @@
             var payload = JSON.parse(data);
             $('#latest-uar-edge').html('<h4 align="center">'+payload.deviceId+': ' + payload.status + '</h4>');
             $('#lasthour-uar-edge').prepend('<c><font size="2">&#60;'+payload.deviceId+': '+ payload.status +'&#62;</font></c>');
-            $('#status-edge').html('<i class="fas fa-male fa-10x"><h1 class="display-4 text-center">'+payload.deviceId+': '+payload.status+'</h1></i>');
+            if(payload.status == "STILL")
+                $('#status-edge').html('<i class="fas fa-male fa-10x"><h1 class="display-4 text-center">'+payload.deviceId+': '+payload.status+'</h1></i>');
+            else 
+                $('#status-edge').html('<i class="fas fa-running fa-10x"><h1 class="display-4 text-center">'+payload.deviceId+': '+payload.status+'</h1></i>');
         });
     });
 </script>
