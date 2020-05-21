@@ -1,0 +1,42 @@
+<div class="container">
+    {{> uar_cloud}}
+    <hr>
+    {{> uar_edge}}
+</div>
+
+ <script>
+    /********** Handle VALUES throw WebSocket and Socket.io *********/
+    function timedRefresh(timeoutPeriod) {
+    setTimeout("location.reload(true);",timeoutPeriod);
+    }
+
+    $(function () {
+        //var socket = io.connect('http://localhost:5000', {transports:['websocket']});
+        //var socket = io.connect('http://iot-assignment1.herokuapp.com', {transports:['websocket']});
+        var socket = io.connect('https://iot-assignment1.herokuapp.com', {transports:['websocket']});
+
+        /*************************************** USER ACTIVITY RECOGNITION ***************************************/
+        
+        //////// CLOUD
+        socket.on('status_cloud', function(data){
+            var payload = JSON.parse(data);
+            $('#latest-uar-cloud').html('<h4 align="center">'+payload.deviceId+': ' + payload.magnitude + '</h4>');
+            $('#lasthour-uar-cloud').prepend('<c><font size="2">&#60;'+payload.deviceId+': '+ payload.magnitude +'&#62;</font></c>');
+            if(payload.status == 1) 
+                $('#status-cloud').html('<i class="fas fa-male fa-10x"><h1 class="display-4 text-center">'+payload.deviceId+': STILL</h1></i>')
+            else
+                $('#status-cloud').html('<i class="fas fa-running fa-10x"><h1 class="display-4 text-center">'+payload.deviceId+': MOVING</h1></i>')
+        });
+
+        //////// EDGE
+        socket.on('status_edge', function(data){
+            var payload = JSON.parse(data);
+            $('#latest-uar-edge').html('<h4 align="center">'+payload.deviceId+': ' + payload.status + '</h4>');
+            $('#lasthour-uar-edge').prepend('<c><font size="2">&#60;'+payload.deviceId+': '+ payload.status +'&#62;</font></c>');
+            if(payload.status == "STILL")
+                $('#status-edge').html('<i class="fas fa-male fa-10x"><h1 class="display-4 text-center">'+payload.deviceId+': '+payload.status+'</h1></i>');
+            else 
+                $('#status-edge').html('<i class="fas fa-running fa-10x"><h1 class="display-4 text-center">'+payload.deviceId+': '+payload.status+'</h1></i>');
+        });
+    });
+</script>

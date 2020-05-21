@@ -1,0 +1,109 @@
+<div class"container">
+    <div class="row"> 
+    <div class="col-sm">
+        <h1 class="display-4 text-center">User Activity Recognition</h1>
+
+        <div id="values_acc"></div>
+        <div id="status_acc"></div>
+        <div align="center" id="result_acc"></div>
+        <div id="warning"></div>
+    </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        var socket = io.connect('https://uar-mobile-app.herokuapp.com', {transports:['websocket']});
+        //var socket = io.connect('http://localhost:5001/', {transports:['websocket']});
+
+        var values_acc = document.getElementById('values_acc');
+        var status_acc = document.getElementById('status_acc');
+        var result_acc = document.getElementById('result_acc');
+        var warning = document.getElementById('warning');
+
+        var i = 0;
+
+        /******************************************** COOKIES LIBRARY ****************************/
+        function setCookie(name) {
+            document.cookie = "username=" + name;
+        }
+
+        function getCookie() {
+            var ca = document.cookie.split('=');
+            return ca[1];
+        }
+
+        function checkCookie() {
+            var user = getCookie();
+            if (user == "" || user === undefined) {
+            user = prompt("Please enter your name:", "");
+                if (user != "" && user != null)
+                    setCookie(user);
+            }
+        }
+        
+        checkCookie();
+        /******************************************************************************************/
+
+        function predict(x, y, z){
+            let magnitude = Math.hypot(x, y, z);
+            if(magnitude > 9.05 && magnitude < 9.95) return 1;
+            else return 0;
+        }
+
+        function startApp() {
+            let acc = new Accelerometer({frequency: 4});
+
+            acc.addEventListener('reading', function(e) {
+                i++;
+                var prediction = predict(e.target.x, e.target.y, e.target.z);
+                
+                // Periodic sending of values
+                if(i%4 == 0){
+                    /******************************* CLOUD BASED ***********************************/
+                    socket.emit('values', {
+                        user_id: getCookie(),
+                        x: e.target.x,
+                        y: e.target.y,
+                        z: e.target.z,
+                        flag: 0
+                    });
+
+                    /******************************* EDGE BASED ***********************************/
+                    if(prediction == 1){
+                        socket.emit('values', {
+                            user_id: getCookie(),
+                            activity: 'STILL',
+                            flag: 1
+                        });
+                    }
+                    else{
+                        socket.emit('values', {
+                            user_id: getCookie(),
+                            activity: 'MOVING',
+                            flag: 1
+                        });
+                    }
+                }
+                if(prediction  == 1) result_acc.innerHTML = '<i class="text-center fas fa-male fa-10x"><h1 class="display-4 text-center">STILL</h1></i>'
+                else result_acc.innerHTML = '<i class="text-center fas fa-running fa-10x"><h1 class="display-4 text-center">MOVING</h1></i>'
+            });
+            acc.start();
+        }
+
+        if ('Accelerometer' in window) {
+            navigator.permissions.query({ name: "accelerometer" }).then(result => {
+            if (result.state != 'granted') {
+                warning.innerHTML = "Sorry, we're not allowed to access sensors on your device..";
+                return;
+            }
+            startApp();
+            }).catch(err => {
+                console.log("Integration with Permissions API is not enabled, still try to start");
+                startApp();
+            });
+        } else {
+            warning.innerHTML = 'Your browser doesn\'t support sensors. Google chrome and HTTPS are required'
+        }
+    });
+</script>
