@@ -40,6 +40,7 @@ The Heroku web dashboard is available here:
 
 ___
 ## User activity recognition mobile application
+![img](./img/uar.gif)
 * #### [UAR - Heroku](https://uar-mobile-app.herokuapp.com)
 ___
 ## Author 
